@@ -47,6 +47,8 @@ class HashTable:
         """
         # Your code here
         #return self.length
+        #total elements / capacity
+        #find which node has a value
         pass
 
     def fnv1(self, key):
@@ -99,6 +101,9 @@ class HashTable:
         # Your code here
         # hashed key
         hashedKey = self.hash_index(key)
+        if self.capacity[hashedKey] != None:
+            print('collision, trying to overwrite {self.capacity[hashedKey]}')
+            #put and collision, add new node to head, for constant time
         print('hashedKey', hashedKey)
         self.capacity[hashedKey] = value
         print(self.capacity[hashedKey])
@@ -116,6 +121,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        #on collision remove pointer to that node
         keyHash = self.hash_index(key)
         self.capacity[keyHash] == None
 
