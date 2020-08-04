@@ -24,6 +24,7 @@ class HashTable:
         # Your code here
         #[none] * capacity
         self.capacity = [None for _ in range(capacity)]
+        
 
 
     def get_num_slots(self):
@@ -46,7 +47,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        #return self.length
+        #find number of elements / capacity
         pass
 
     def fnv1(self, key):
@@ -99,9 +100,16 @@ class HashTable:
         # Your code here
         # hashed key
         hashedKey = self.hash_index(key)
-        print('hashedKey', hashedKey)
-        self.capacity[hashedKey] = value
-        print(self.capacity[hashedKey])
+        #print('hashedKey', hashedKey)
+        #insert to head
+        if self.capacity[hashedKey] != None:
+            print('collision', self.capacity[hashedKey])
+            node = hashedKey
+            node.next.value = self.capacity[hashedKey]
+            node.value = value
+        self.capacity[hashedKey] = value #HashTableEntry(key, value)
+        #print(self.capacity)
+        self.get_load_factor()
        
 
         #HashTableEntry(hashedKey , value)
@@ -117,8 +125,26 @@ class HashTable:
         """
         # Your code here
         keyHash = self.hash_index(key)
-        self.capacity[keyHash] = None
-
+        cur = self.capacity[keyHash]
+        if cur == None:
+            print('warning Key not found')
+        # if key is head
+        if cur.key == key:
+            self.capacity[keyHash] = cur.next
+            return cur
+        # key not head
+        while cur != None:
+            prev = cur
+            cur = cur.next
+            #see if keys matchs
+            if cur.key == key:
+                prev.next = cur.next
+                self.get_load_factor()
+                return cur
+            #otherwise check the next node
+            
+          
+            
 
     def get(self, key):
         """
@@ -130,7 +156,13 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
-        return self.capacity[index]
+        cur = self.capacity[index]
+        print('index', index, 'self.capacity',self.capacity,'this is currenttttt',cur)
+        if cur.key == key:
+            return cur
+        while cur.key != key:
+            cur = cur.next
+        return cur
 
 
     def resize(self, new_capacity):
@@ -141,6 +173,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # if get_load factor 
 
 
 if __name__ == "__main__":
@@ -177,3 +210,4 @@ if __name__ == "__main__":
         print(ht.get(f"line_{i}"))
 
     print("")
+
