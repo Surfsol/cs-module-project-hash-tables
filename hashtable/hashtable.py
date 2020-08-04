@@ -117,7 +117,7 @@ class HashTable:
         """
         # Your code here
         keyHash = self.hash_index(key)
-        self.capacity[keyHash] == None
+        self.capacity[keyHash] = None
 
 
     def get(self, key):
