@@ -67,6 +67,21 @@ class HashTable:
             hash = hash ^ ord(i)
         return hash
 
+    def fnv(self, s):
+        fnvOffset = 14695981039346656037
+        fnvPrime = 1099511628211
+
+        hashed_var = fnvOffset
+        # can use encode() for full string
+        # ord for byte
+        string_bytes = s.encode()
+
+        for b in string_bytes:
+            hashed_var = hashed_var * fnvPrime
+            hashed_var = hashed_var ^ b
+        return hashed_var
+
+
     def djb2(self, key):
         """
         DJB2 hash, 32-bit
@@ -75,10 +90,17 @@ class HashTable:
         """
         # Your code here
         #for byte in key:
+        hash_var = 5381
 
+        string_bytes = key.encode()
 
-        #self.djb2 = key*16777619
-        pass
+        for b in string_bytes:
+            # << adds 5 0 
+            hash_var = ((hash_var << 5) + hash_var) + b
+        
+        return hash_var
+
+        
 
     def hash_index(self, key):
         """
